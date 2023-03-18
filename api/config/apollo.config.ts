@@ -28,8 +28,10 @@ const typeDefs = gql`
   # type Mutation
 `;
 
-async function configureApolloServer(app: Express): HttpApolloServer {
-  const httpServer = http.createServer(app);
+async function configureApolloServer(
+  app: Express,
+  httpServer: any
+): HttpApolloServer {
   const server = new ApolloServer({
     typeDefs: [typeDefs, Querys, QueryTypes],
     resolvers: ApolloResolvers,
@@ -44,7 +46,7 @@ async function configureApolloServer(app: Express): HttpApolloServer {
     ],
   });
   await server.start();
-  server.applyMiddleware({ app, path: "/graphql" });
+  server.applyMiddleware({ app });
   return [httpServer, server];
 }
 

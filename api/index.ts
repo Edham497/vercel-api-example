@@ -6,7 +6,7 @@ import configureApolloServer from "./config/apollo.config";
 import { connectDB } from "./config/mongo.config";
 
 connectDB();
-const [app, port] = await configureExpress();
-const [server, apollo] = await configureApolloServer(app);
+const [app, httpServer] = configureExpress();
+configureApolloServer(app, httpServer);
 
-export default server;
+export default httpServer;

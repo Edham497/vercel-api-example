@@ -5,14 +5,16 @@ import configureApolloServer from "./api/config/apollo.config";
 import { connectDB } from "./api/config/mongo.config";
 dotenv.config();
 
+const port = process.env.PORT || 3000;
+
 async function configure() {
   connectDB();
-  const [app, port] = await configureExpress();
-  const [server, apollo] = await configureApolloServer(app);
+  const [app, httpServer] = configureExpress();
+  await configureApolloServer(app, httpServer);
 
-  server.listen({ port }, async () => {
-    consola.log(`Server at http://localhost:${port}${apollo.graphqlPath}`);
+  httpServer.listen(3000, async () => {
     consola.log(`Server at http://localhost:${port}`);
+    consola.log(`Server at http://localhost:${port}/graphql`);
   });
 }
 configure();

@@ -1,16 +1,16 @@
 {
   "presets": ["@babel/preset-env", "@babel/preset-typescript"],
   "plugins": [
-    [
-      "module-resolver",
-      {
-        "root": ["./api"],
-        "extensions": [".js", ".ts", ".tsx", ".json"],
-        "alias": {
-          "models": "./api/models",
-          "apollo": "./api/apollo"
-        }
-      }
-    ]
+    // [
+    //   "module-resolver",
+    //   {
+    //     "root": ["./api"],
+    //     "extensions": [".js", ".ts", ".tsx", ".json"],
+    //     "alias": {
+    //       "models": "./api/models",
+    //       "apollo": "./api/apollo"
+    //     }
+    //   }
+    // ]
   ]
 }
