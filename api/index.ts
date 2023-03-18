@@ -1,6 +1,7 @@
 import mongoose, { ConnectOptions } from "mongoose";
 import express, { Express, Router } from "express";
 import consola from "consola";
+import UserModel from "../src/models/users";
 
 const MONGO_DB = "kitchit";
 const MONGO_USER = "kitchit-dev";
@@ -34,8 +35,9 @@ app.use(express.json());
 
 const router = Router();
 
-router.use("/hello", (req, res) => {
-  res.json({ msg: "hello world!" });
+router.use("/hello", async (req, res) => {
+  const users = await UserModel.find({});
+  res.json({ users });
 });
 
 app.use("/", router);
