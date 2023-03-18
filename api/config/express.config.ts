@@ -9,7 +9,7 @@ export function configureExpress(): ExpressApp {
   app.use(cors());
   app.use(express.json());
   app.use("/", routes);
-
   const httpServer = http.createServer(app);
+
   return [app, httpServer];
 }

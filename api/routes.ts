@@ -4,8 +4,7 @@ import UserModel from "./models/users";
 const router = Router();
 
 router.use("/hello", async (req, res) => {
-  const users = await UserModel.find({});
-  res.json({ users });
+  res.json({ message: "Hello World from Vercel lml" });
 });
 
 export default router;

@@ -10,8 +10,6 @@ import { Server } from "http";
 import ApolloResolvers from "../apollo/resolvers";
 import { QueryTypes, Querys } from "../apollo/types";
 
-type HttpApolloServer = Promise<[Server, ApolloServer]>;
-
 const typeDefs = gql`
   enum CacheControlScope {
     PUBLIC
@@ -28,14 +26,12 @@ const typeDefs = gql`
   # type Mutation
 `;
 
-async function configureApolloServer(
-  app: Express,
-  httpServer: any
-): HttpApolloServer {
+async function configureApolloServer(app: Express, httpServer: any) {
   const server = new ApolloServer({
     typeDefs: [typeDefs, Querys, QueryTypes],
     resolvers: ApolloResolvers,
     csrfPrevention: true,
+    introspection: true,
     cache: "bounded",
     plugins: [
       ApolloServerPluginDrainHttpServer({ httpServer }),
@@ -47,7 +43,7 @@ async function configureApolloServer(
   });
   await server.start();
   server.applyMiddleware({ app });
-  return [httpServer, server];
+  // return [httpServer, server];
 }
 
 export default configureApolloServer;
