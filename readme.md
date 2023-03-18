@@ -17,11 +17,11 @@ yarn add -D @babel/cli @babel/core @babel/node @babel/preset-env @babel/preset-t
     [
       "module-resolver",
       {
-        "root": ["./src"],
+        "root": ["./api"],
         "extensions": [".js", ".ts", ".tsx", ".json"]
         // "alias": {
-        //   "models": "./src/models",
-        //   "apollo": "./src/apollo"
+        //   "models": "./api/models",
+        //   "apollo": "./api/apollo"
         // }
       }
     ]
