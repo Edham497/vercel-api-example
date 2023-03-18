@@ -1,0 +1,31 @@
+{
+  "name": "apollo-server-vercel",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:prod": "PORT=4001 babel-node --extensions \".ts\" api/index.ts",
+    "dev": "nodemon --exec babel-node dev.ts --extensions .ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^7.0.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.21.0",
+    "@babel/core": "^7.21.3",
+    "@babel/node": "^7.20.7",
+    "@babel/preset-env": "^7.20.2",
+    "@babel/preset-typescript": "^7.21.0",
+    "@babel/register": "^7.21.0",
+    "@types/express": "^4.17.17",
+    "babel-plugin-module-resolver": "^5.0.0",
+    "consola": "^2.15.3",
+    "nodemon": "^2.0.21",
+    "typescript": "^5.0.2"
+  }
+}
