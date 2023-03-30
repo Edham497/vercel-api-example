@@ -1,4 +1,6 @@
 import { merge } from "lodash";
+import PostResolvers from "./Posts";
+import ProfileResolvers from "./Profile";
 
 const GeneralResolvers = {
   Query: {
@@ -13,5 +15,9 @@ const GeneralResolvers = {
   },
 };
 
-const ApolloResolvers = merge(GeneralResolvers);
+const ApolloResolvers = merge(
+  GeneralResolvers,
+  PostResolvers,
+  ProfileResolvers
+);
 export default ApolloResolvers;

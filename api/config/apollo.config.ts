@@ -1,4 +1,3 @@
-import http from "http";
 import { Express } from "express";
 import {
   gql,
@@ -6,9 +5,9 @@ import {
   ApolloServerPluginLandingPageProductionDefault,
 } from "apollo-server-core";
 import { ApolloServer } from "apollo-server-express";
-import { Server } from "http";
+
 import ApolloResolvers from "../apollo/resolvers";
-import { QueryTypes, Querys } from "../apollo/types";
+import { BaseTypes, QueryTypes, Querys } from "../apollo/types";
 
 const typeDefs = gql`
   enum CacheControlScope {
@@ -26,9 +25,9 @@ const typeDefs = gql`
   # type Mutation
 `;
 
-async function configureApolloServer(app: Express, httpServer: any) {
+export async function configureApolloServer(app: Express, httpServer: any) {
   const server = new ApolloServer({
-    typeDefs: [typeDefs, Querys, QueryTypes],
+    typeDefs: [typeDefs, BaseTypes, Querys, QueryTypes],
     resolvers: ApolloResolvers,
     csrfPrevention: true,
     introspection: true,
@@ -43,7 +42,4 @@ async function configureApolloServer(app: Express, httpServer: any) {
   });
   await server.start();
   server.applyMiddleware({ app });
-  // return [httpServer, server];
 }
-
-export default configureApolloServer;
