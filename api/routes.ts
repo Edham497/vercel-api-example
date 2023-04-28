@@ -4,10 +4,6 @@ import UserModel from "./models/users";
 
 const router = Router();
 
-router.use("/hello", async (req, res) => {
-  res.json({ message: "Hello World from Vercel lml" });
-});
-
 router.use("/post/:id", async (req, res) => {
   try {
     const post = await PostModel.findById(req.params.id);
