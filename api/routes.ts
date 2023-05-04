@@ -43,7 +43,7 @@ router.get("/UserStats/:year", async (req, res) => {
     stats[month] += 1;
   });
   res.json({
-    name: `Accounsts created on ${year}`,
+    name: `Accounts created`,
     data: stats,
     total: data.length,
   });
