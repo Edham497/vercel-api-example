@@ -1,9 +1,9 @@
 import dotenv from "dotenv";
 import consola from "consola";
-import { connectDB } from "./api/config/mongo.config";
-import { configureExpress } from "./api/config/express.config";
-import { configureApolloServer } from "./api/config/apollo4.config";
-import { applyServerMiddleware } from "./api/config/middleware";
+import { connectDB } from "./src/config/mongo.config";
+import { configureExpress } from "./src/config/express.config";
+import { configureApolloServer } from "./src/config/apollo4.config";
+import { applyServerMiddleware } from "./src/config/middleware";
 dotenv.config();
 
 const port = process.env.PORT || 4000;

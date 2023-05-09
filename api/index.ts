@@ -1,16 +1,16 @@
 import dotenv from "dotenv";
-import { connectDB } from "./config/mongo.config";
-import { configureExpress } from "./config/express.config";
-import { configureApolloServer } from "./config/apollo4.config";
-import { applyServerMiddleware } from "./config/middleware";
-
+import { connectDB } from "../src/config/mongo.config";
+import { configureExpress } from "../src/config/express.config";
+import { configureApolloServer } from "../src/config/apollo4.config";
+import { applyServerMiddleware } from "../src/config/middleware";
 dotenv.config();
+async function configure() {
+  const server = await configureApolloServer(httpServer);
+  applyServerMiddleware(app, server);
+}
+
 connectDB();
 const { app, httpServer } = configureExpress();
 
-(async () => {
-  const server = await configureApolloServer(httpServer);
-  applyServerMiddleware(app, server);
-})();
-
+configure();
 export default httpServer;

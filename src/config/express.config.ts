@@ -16,7 +16,9 @@ export function configureExpress(): ExpressApp {
   const JSON = express.json();
 
   app.use(CORS, JSON);
-  // app.use("/", routes);
+  app.get("/", (req, res) => {
+    res.json({ message: "Hello World" });
+  });
 
   const httpServer = http.createServer(app);
   return { app, httpServer };
