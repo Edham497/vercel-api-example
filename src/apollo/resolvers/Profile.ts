@@ -1,6 +1,5 @@
 import consola from "consola";
-import { UserModel } from "../../models/users";
-import mongoose from "mongoose";
+import { UserModel } from "../../models";
 
 async function Profile(_, params) {
   try {

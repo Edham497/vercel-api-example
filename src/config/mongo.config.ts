@@ -3,11 +3,7 @@ import consola from "consola";
 
 export async function connectDB() {
   try {
-    const [SB01_MONGO_DB, SB01_MONGO_USER, SB01_MONGO_PASS] = [
-      "kitchit",
-      "sb01",
-      "NAbRgfqIkTyxFd3z",
-    ];
+    const { SB01_MONGO_DB, SB01_MONGO_USER, SB01_MONGO_PASS } = process.env;
     const uri = "mongodb+srv://cluster0.3vprcjm.mongodb.net/" + SB01_MONGO_DB;
 
     await mongoose.connect(uri, {
