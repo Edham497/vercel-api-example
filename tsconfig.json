@@ -1,14 +1,18 @@
 {
   "compilerOptions": {
-    "rootDirs": ["src"],
-    "outDir": "dist",
-    "lib": ["es2020"],
-    "target": "es2020",
-    "module": "esnext",
+    "allowSyntheticDefaultImports": true,
+    "target": "es6",
+    "module": "es6",
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "declaration": false,
+    "noImplicitAny": false,
+    "sourceMap": true,
+    "noLib": false,
+    "allowJs": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "types": ["node"]
+    "skipLibCheck": true,
+    "esModuleInterop": true
   }
 }
