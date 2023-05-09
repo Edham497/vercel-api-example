@@ -6,9 +6,11 @@ import { applyServerMiddleware } from "./config/middleware";
 
 dotenv.config();
 connectDB();
-
 const { app, httpServer } = configureExpress();
-const server = await configureApolloServer(httpServer);
-applyServerMiddleware(app, server);
+
+(async () => {
+  const server = await configureApolloServer(httpServer);
+  applyServerMiddleware(app, server);
+})();
 
 export default httpServer;
