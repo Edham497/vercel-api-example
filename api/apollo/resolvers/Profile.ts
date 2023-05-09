@@ -1,5 +1,6 @@
 import consola from "consola";
-import UserModel from "../../models/users";
+import { UserModel } from "../../models/users";
+import mongoose from "mongoose";
 
 async function Profile(_, params) {
   try {
@@ -24,10 +25,15 @@ async function Profile(_, params) {
   }
 }
 
+async function UpdateFCM(_, { content }) {
+  console.log({ content });
+
+  return "mamaguebo";
+}
+
 const ProfileResolvers = {
-  Query: {
-    Profile,
-  },
+  Query: { Profile },
+  Mutation: { UpdateFCM },
 };
 
 export default ProfileResolvers;

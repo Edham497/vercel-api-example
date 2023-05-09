@@ -1,9 +1,12 @@
-import { gql } from "apollo-server-core";
+import gql from "graphql-tag";
 import { Mutations } from "./Mutation";
 import { Querys } from "./Query";
-import { QueryTypes, BaseTypes } from "./types";
+import { QueryTypes, BaseTypes, InputTypes, MutationTypes } from "./types";
 
 const typeDefs = gql`
+  type Query
+  type Mutation
+
   enum CacheControlScope {
     PUBLIC
     PRIVATE
@@ -14,9 +17,14 @@ const typeDefs = gql`
     scope: CacheControlScope
     inheritMaxAge: Boolean
   ) on FIELD_DEFINITION | OBJECT | INTERFACE | UNION
-
-  type Query
-  type Mutation
 `;
 
-export default [typeDefs, Querys, Mutations, BaseTypes, QueryTypes];
+export default [
+  typeDefs,
+  Querys,
+  Mutations,
+  BaseTypes,
+  QueryTypes,
+  MutationTypes,
+  InputTypes,
+];

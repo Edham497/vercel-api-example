@@ -1,4 +1,4 @@
-import { gql } from "apollo-server-core";
+import gql from "graphql-tag";
 
 export const Querys = gql`
   extend type Query {
@@ -6,6 +6,7 @@ export const Querys = gql`
     ServerConfig: ServerConfigResponse
 
     Posts: [Post]
+    User(id: ID): User
     Profile(id: ID): Profile
     PostsByProfile(id: ID, page: Int): [Post]
     Notifications: [Notification]

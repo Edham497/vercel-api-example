@@ -1,25 +1,19 @@
-import mongoose, { ConnectOptions } from "mongoose";
+import mongoose from "mongoose";
 import consola from "consola";
-
-const MONGO_DB = "kitchit";
-const MONGO_USER = "kitchit-dev";
-const MONGO_PASS = "kitchit04012K21";
 
 export async function connectDB() {
   try {
-    const options: ConnectOptions = {
+    const { SB01_MONGO_DB, SB01_MONGO_USER, SB01_MONGO_PASS } = process.env;
+    const uri = "mongodb+srv://cluster0.3vprcjm.mongodb.net/" + SB01_MONGO_DB;
+
+    await mongoose.connect(uri, {
       w: "majority",
       retryWrites: true,
-      dbName: MONGO_DB,
-      auth: { username: MONGO_USER, password: MONGO_PASS },
-    };
+      auth: { username: SB01_MONGO_USER, password: SB01_MONGO_PASS },
+    });
 
-    await mongoose.connect(
-      "mongodb+srv://cluster0.xdmjd.mongodb.net/",
-      options
-    );
     consola.success("Database connected");
   } catch (error) {
-    console.error("Database error");
+    consola.error("Database error");
   }
 }

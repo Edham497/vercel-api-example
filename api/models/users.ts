@@ -1,41 +1,60 @@
-import { Schema, InferSchemaType, model } from "mongoose";
+import {
+  DocumentType,
+  Ref,
+  getModelForClass,
+  prop,
+} from "@typegoose/typegoose";
+import { Wallet, WalletModel } from "./wallet";
 
-const schema = new Schema({
-  username: {
-    type: String,
-    unique: true,
-    required: true,
+export class User {
+  @prop()
+  public name?: string;
+  @prop()
+  public description?: string;
+  @prop()
+  public provider?: string;
+  @prop()
+  public picture?: string;
+  @prop({ required: true, unique: true })
+  public username!: string;
+  @prop({ required: true, unique: true })
+  public email!: string;
+  @prop({ required: true })
+  public pass!: string;
+  @prop({ ref: () => Wallet })
+  public walletId?: Ref<Wallet>;
+  @prop({ required: true })
+  public fcmt!: string;
+  @prop({ required: true })
+  public fcmid!: string;
+
+  public async createWalletForUser(this: UserDocument) {
+    let wallet = new WalletModel({ userId: this._id });
+    this.walletId = wallet._id;
+    wallet.save();
+    await this.save();
+  }
+
+  public async setFirebaseToken(this: UserDocument, token: string) {
+    this.fcmt = token;
+    await this.save();
+  }
+
+  public async setFirebaseId(this: UserDocument, id: string) {
+    this.fcmid = id;
+    await this.save();
+  }
+
+  public async setFirebaseData(this: UserDocument, id: string, token: string) {
+    this.fcmid = id;
+    this.fcmt = token;
+  }
+}
+
+export type UserDocument = DocumentType<User>;
+export const UserModel = getModelForClass(User, {
+  schemaOptions: {
+    timestamps: true,
+    versionKey: false,
   },
-  email: {
-    type: String,
-    unique: true,
-    required: true,
-  },
-  // phone: { type: String, unique: true, default: null },
-  name: { type: String, required: true },
-  provider: { type: String },
-  description: { type: String, default: null },
-  picture: {
-    type: String,
-    default: "https://kitchitfiles.s3.us-east-2.amazonaws.com/default.png",
-  },
-  pass: { type: String, required: true },
-  firebaseToken: { type: String },
-  balance: { type: Number, default: 0 },
-  posts: { type: Number, default: 0 },
-  followers: { type: Number, default: 0 },
-  following: { type: Number, default: 0 },
-  status: { type: Boolean, default: true },
-  fcmid: { type: String, required: false },
-  wallet_id: { type: Schema.Types.ObjectId, ref: "Wallet" },
 });
-
-// @ts-ignore
-schema.set("skipVersioning", true);
-schema.set("timestamps", true);
-schema.set("versionKey", false);
-
-type User = InferSchemaType<typeof schema>;
-
-const UserModel = model("User", schema);
-export default UserModel;

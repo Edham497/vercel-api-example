@@ -1,4 +1,4 @@
-import { gql } from "apollo-server-core";
+import gql from "graphql-tag";
 
 export const Querys = gql`
   extend type Query {
@@ -31,6 +31,15 @@ export const QueryTypes = gql`
   }
 `;
 
+export const MutationTypes = gql`
+  type DefaultServerConfig {
+    sc_show_banners: Boolean
+    sc_show_main_msg: Boolean
+    sc_show_giveaway_info: Boolean
+    sc_welcome_msg: String
+  }
+`;
+
 export const BaseTypes = gql`
   type Author {
     _id: ID
@@ -45,6 +54,20 @@ export const BaseTypes = gql`
     fcmid: String
     provider: String
     email: String
+  }
+
+  type User {
+    _id: ID
+    username: String
+    name: String
+    email: String
+    phone: String
+    picture: String
+    fcmid: String
+    fcmt: String
+    provider: String
+    description: String
+    wallet: ID
   }
 
   type Post {
@@ -68,5 +91,21 @@ export const BaseTypes = gql`
     post: ID
     sender: ID
     receiver: ID
+  }
+`;
+
+export const InputTypes = gql`
+  input NewUserInput {
+    username: String!
+    name: String!
+    email: String!
+    phoneNumber: String!
+  }
+
+  input NewUserDataInput {
+    username: String
+    name: String
+    description: String
+    picture: String
   }
 `;
