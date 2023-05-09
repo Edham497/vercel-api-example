@@ -4,12 +4,13 @@ import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHt
 
 import resolvers from "../apollo/resolvers";
 import typeDefs from "../apollo/schemas";
+import { expressMiddleware } from "@apollo/server/express4";
 
 interface MyContext {
   token?: String;
 }
 
-export async function configureApolloServer(httpServer: any) {
+export async function configureApolloServer(app: Express, httpServer: any) {
   const server = new ApolloServer<MyContext>({
     resolvers,
     typeDefs,
@@ -19,5 +20,10 @@ export async function configureApolloServer(httpServer: any) {
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
   });
   await server.start();
-  return server;
+  app.use(
+    "/graphql",
+    expressMiddleware(server, {
+      context: async ({ req }) => ({}),
+    })
+  );
 }

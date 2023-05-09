@@ -9,10 +9,9 @@ dotenv.config();
 const port = process.env.PORT || 4000;
 
 async function configure() {
-  const { app, httpServer } = configureExpress();
-  const server = await configureApolloServer(httpServer);
-  applyServerMiddleware(app, server);
   connectDB();
+  const { app, httpServer } = configureExpress();
+  configureApolloServer(app, httpServer);
 
   httpServer.listen(port, async () => {
     consola.log(`Server at http://localhost:${port}`);
