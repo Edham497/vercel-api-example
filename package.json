@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start:prod": "PORT=4001 babel-node --extensions \".ts\" api/index.ts",
     "dev": "nodemon --exec babel-node dev.ts --extensions .ts"
