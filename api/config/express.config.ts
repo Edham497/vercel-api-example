@@ -1,7 +1,7 @@
 import http from "http";
 import express, { Express } from "express";
 import cors from "cors";
-import routes from "../routes";
+// import routes from "../routes";
 type ExpressApp = {
   app: Express;
   httpServer: http.Server<
