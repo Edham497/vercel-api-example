@@ -4,7 +4,7 @@ import {
   getModelForClass,
   prop,
 } from "@typegoose/typegoose";
-import { Wallet, WalletModel } from "./wallet";
+import { Wallet } from "./wallet";
 
 export class User {
   @prop()
@@ -28,12 +28,12 @@ export class User {
   @prop({ required: true })
   public fcmid!: string;
 
-  public async createWalletForUser(this: UserDocument) {
-    let wallet = new WalletModel({ userId: this._id });
-    this.walletId = wallet._id;
-    wallet.save();
-    await this.save();
-  }
+  // public async createWalletForUser(this: UserDocument) {
+  //   let wallet = new WalletModel({ userId: this._id });
+  //   this.walletId = wallet._id;
+  //   wallet.save();
+  //   await this.save();
+  // }
 
   public async setFirebaseToken(this: UserDocument, token: string) {
     this.fcmt = token;
@@ -52,9 +52,3 @@ export class User {
 }
 
 export type UserDocument = DocumentType<User>;
-export const UserModel = getModelForClass(User, {
-  schemaOptions: {
-    timestamps: true,
-    versionKey: false,
-  },
-});
