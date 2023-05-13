@@ -5,28 +5,34 @@ import {
   prop,
 } from "@typegoose/typegoose";
 import { Wallet } from "./wallet";
+import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
 
-export class User {
-  @prop()
-  public name?: string;
-  @prop()
-  public description?: string;
-  @prop()
-  public provider?: string;
-  @prop()
-  public picture?: string;
+const defaultImage =
+  "https://kitchitfiles.s3.us-east-2.amazonaws.com/default.png";
+
+export class User extends TimeStamps {
   @prop({ required: true, unique: true })
   public username!: string;
   @prop({ required: true, unique: true })
   public email!: string;
+  @prop()
+  public name?: string;
+  @prop()
+  public provider?: string;
+  @prop()
+  public description?: string;
+  @prop({ default: defaultImage })
+  public picture?: string;
   @prop({ required: true })
   public pass!: string;
-  @prop({ ref: () => Wallet })
-  public walletId?: Ref<Wallet>;
   @prop({ required: true })
   public fcmt!: string;
   @prop({ required: true })
   public fcmid!: string;
+  @prop({ ref: () => Wallet })
+  public walletId?: Ref<Wallet>;
+  @prop()
+  public lastLogin?: String;
 
   // public async createWalletForUser(this: UserDocument) {
   //   let wallet = new WalletModel({ userId: this._id });

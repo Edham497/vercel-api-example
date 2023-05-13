@@ -6,9 +6,16 @@ export const Querys = gql`
     ServerConfig: ServerConfigResponse
 
     Posts: [Post]
+    AnalyticsPostsByCategory: [PostCountByCategory]
+    AnalyticsPostsByUser: [PostsCountByUser]
     User(id: ID): User
     Profile(id: ID): Profile
     PostsByProfile(id: ID, page: Int): [Post]
     Notifications: [Notification]
+    RegisteredStats(year: Int): RegisteredStatsResponse
+    RegisteredStatsBetweenDates(
+      startDate: String
+      endDate: String
+    ): RegisteredStatsResponse
   }
 `;

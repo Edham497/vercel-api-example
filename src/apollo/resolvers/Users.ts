@@ -1,5 +1,5 @@
 import consola from "consola";
-import { UserModel } from "../../models/users";
+import { UserModel } from "../../models";
 
 async function User(_, { id }) {
   const user = await UserModel.findById(id);
@@ -56,8 +56,64 @@ async function UpdateUserData(_, { id, content }) {
   }
 }
 
+async function RegisteredStats(_, params) {
+  try {
+    const { year } = params;
+    const users = await UserModel.find(
+      {
+        createdAt: {
+          $gte: new Date(year, 1, 1),
+          $lt: new Date(year, 12, 31),
+        },
+      },
+      { createdAt: 1 }
+    );
+
+    const stats = Array(12).fill(0);
+    users.forEach((e) => {
+      const date = new Date(e.createdAt);
+      const month = date.getMonth();
+      stats[month] += 1;
+    });
+    return {
+      name: `Accounts created`,
+      data: stats,
+      total: users.length,
+    };
+  } catch (error) {}
+}
+async function RegisteredStatsBetweenDates(_, params) {
+  try {
+    const { start, end } = params;
+    const sd = new Date(start);
+    const ed = new Date(end);
+
+    const users = await UserModel.find(
+      {
+        createdAt: {
+          $gte: sd,
+          $lt: ed,
+        },
+      },
+      { createdAt: 1 }
+    );
+
+    const stats = Array(12).fill(0);
+    users.forEach((e) => {
+      const date = new Date(e.createdAt);
+      const month = date.getMonth();
+      stats[month] += 1;
+    });
+    return {
+      name: `Accounts created`,
+      data: stats,
+      total: users.length,
+    };
+  } catch (error) {}
+}
+
 const UserResolvers = {
-  Query: { User },
+  Query: { User, RegisteredStats, RegisteredStatsBetweenDates },
   Mutation: { CreateUser, UpdateUserData },
 };
 

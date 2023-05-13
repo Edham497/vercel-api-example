@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
-import PostModel from "../../models/posts";
 import consola from "consola";
+import { PostModel } from "../../models";
 
 const Posts = async (_, params) => {
   const { page } = params;
@@ -71,10 +71,43 @@ async function PostsByProfile(_, params) {
   }
 }
 
+async function AnalyticsPostsByCategory(_, params) {
+  const posts = await PostModel.aggregate([
+    { $group: { _id: "$category", count: { $sum: 1 } } },
+    { $project: { _id: 0, category: "$_id", count: 1 } },
+    { $sort: { count: -1 } },
+    { $limit: 20 },
+  ]);
+  return posts;
+}
+
+async function AnalyticsPostsByUser(_, params) {
+  const posts = await PostModel.aggregate([
+    { $group: { _id: "$author", count: { $sum: 1 } } },
+    {
+      $lookup: {
+        from: "users",
+        localField: "_id",
+        foreignField: "_id",
+        as: "username",
+        pipeline: [{ $project: { _id: 0, username: 1 } }],
+      },
+    },
+    { $project: { username: { $arrayElemAt: ["$username", 0] }, count: 1 } },
+    { $project: { username: "$username.username", count: 1 } },
+    { $sort: { count: -1 } },
+    { $limit: 20 },
+  ]);
+  console.log(posts);
+  return posts;
+}
+
 const PostResolvers = {
   Query: {
     Posts,
     PostsByProfile,
+    AnalyticsPostsByCategory,
+    AnalyticsPostsByUser,
   },
 };
 

@@ -29,6 +29,21 @@ export const QueryTypes = gql`
     message: String
     image: String
   }
+
+  type RegisteredStatsResponse {
+    name: String
+    data: [Int]
+    total: Int
+  }
+  type PostsCountByUser {
+    _id: ID
+    count: Int
+    username: String
+  }
+  type PostCountByCategory {
+    category: String
+    count: Int
+  }
 `;
 
 export const MutationTypes = gql`
