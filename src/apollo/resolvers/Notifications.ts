@@ -1,3 +1,4 @@
+import { UserModel } from "../../models";
 import NotificationModel from "../../models/notifications";
 
 async function Notifications(_, params) {
@@ -24,6 +25,41 @@ async function CreateGlobalNotification(_, params) {
 
   return "notification created!";
 }
+async function CreateNotification(_, params) {
+  try {
+    let tokens = params.fcmt;
+    // if (params.fcmt === "All devices") {
+    //   const users = await UserModel.find();
+    //   tokens = users
+    //     .map((element) => element.firebaseToken)
+    //     .filter((e) => e != null && e != undefined && e !== "");
+    // }
+
+    const response = await fetch("https://fcm.googleapis.com/fcm/send", {
+      method: "POST",
+      body: JSON.stringify({
+        to: tokens,
+        notification: {
+          title: params.title,
+          body: params.body,
+        },
+      }),
+      headers: {
+        Authorization: process.env.FIREBASE_KEY,
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    console.log(data);
+    if (data.success) {
+      return "Notification sent";
+    }
+    throw Error();
+  } catch (e) {
+    console.log({ error: e });
+    return "Notification error";
+  }
+}
 
 const NotificationResolvers = {
   Query: {
@@ -31,6 +67,7 @@ const NotificationResolvers = {
   },
   Mutation: {
     CreateGlobalNotification,
+    CreateNotification,
   },
 };
 

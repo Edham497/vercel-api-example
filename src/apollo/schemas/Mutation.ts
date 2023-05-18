@@ -9,5 +9,6 @@ export const Mutations = gql`
     UpdateUserData(id: ID, content: NewUserDataInput): String
     SetDefaultServerConfig: DefaultServerConfig
     ShowMainMessage(show: Boolean): String
+    CreateNotification(title: String, body: String, fcmt: String): String
   }
 `;

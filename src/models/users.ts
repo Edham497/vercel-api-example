@@ -27,6 +27,8 @@ export class User extends TimeStamps {
   public pass!: string;
   @prop({ required: true })
   public fcmt!: string;
+  @prop({})
+  public firebaseToken!: string;
   @prop({ required: true })
   public fcmid!: string;
   @prop({ ref: () => Wallet })
