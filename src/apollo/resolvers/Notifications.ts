@@ -28,12 +28,12 @@ async function CreateGlobalNotification(_, params) {
 async function CreateNotification(_, params) {
   try {
     let tokens = params.fcmt;
-    // if (params.fcmt === "All devices") {
-    //   const users = await UserModel.find();
-    //   tokens = users
-    //     .map((element) => element.firebaseToken)
-    //     .filter((e) => e != null && e != undefined && e !== "");
-    // }
+    if (params.fcmt === "All devices") {
+      const users = await UserModel.find();
+      tokens = users
+        .map((element) => element.firebaseToken)
+        .filter((e) => e != null && e != undefined && e !== "");
+    }
 
     const response = await fetch("https://fcm.googleapis.com/fcm/send", {
       method: "POST",
